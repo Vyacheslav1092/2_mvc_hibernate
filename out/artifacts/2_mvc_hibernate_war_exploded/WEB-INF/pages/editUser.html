@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать пользователя</title>
+</head>
+<body>
+    <div>
+        <h1>
+            Редактировать пользователя
+        </h1>
+        <form th:action="@{/edit}" th:object="${user}">
+            <input type="hidden" th:field="*{id}">
+            <div>
+                <label for="name">
+                    name
+                </label>
+                <input id="name" name="name" type="text" th:field="*{name}">
+            </div>
+            <div>
+                <label for="lastName">
+                    lastName
+                </label>
+                <input id="lastName" name="lastName" type="text" th:field="*{lastName}">
+            </div>
+            <div>
+                <label for="age">
+                    age
+                </label>
+                <input id="age" name="age" type="number" th:field="*{age}">
+            </div>
+            <div>
+                <label for="city">
+                    ciy
+                </label>
+                <input id="city" name="city" type="text" th:field="*{city}">
+            </div>
+            <button value="edit">
+                Редактировать
+            </button>
+        </form>
+    </div>
+</body>
+</html>

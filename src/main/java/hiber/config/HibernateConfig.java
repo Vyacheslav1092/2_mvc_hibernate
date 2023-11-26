@@ -16,6 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -23,7 +24,7 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @ComponentScan(value = "hiber")
 public class HibernateConfig {
-    private Environment environment;
+    private final Environment environment;
 
     public HibernateConfig(Environment environment) {
         this.environment = environment;
@@ -48,7 +49,7 @@ public class HibernateConfig {
     @Bean(name = "transactionManager")
     public PlatformTransactionManager platformManager() {
         return new JpaTransactionManager(
-                getEntityManagerFactoryBean().getObject()
+                Objects.requireNonNull(getEntityManagerFactoryBean().getObject())
         );
     }
 
@@ -62,7 +63,6 @@ public class HibernateConfig {
         return dataSource;
     }
 
-    @Bean
     public Properties getSessionFactory() {
         Properties props = new Properties();
         props.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
