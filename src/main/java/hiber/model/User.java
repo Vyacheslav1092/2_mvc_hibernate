@@ -1,5 +1,6 @@
 package hiber.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,14 +12,30 @@ import javax.persistence.Table;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "lastName")
     private String lastName;
+
+    @Column(name = "age")
     private byte age;
+
+    @Column(name = "city")
     private String city;
 
     public User() {
 
+    }
+
+    public User(String name, String lastName, byte age, String city) {
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.city = city;
     }
 
     public Long getId() {
@@ -27,13 +44,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User(String name, String lastName, byte age, String city) {
-        this.name = name;
-        this.lastName = lastName;
-        this.age = age;
-        this.city = city;
     }
 
     public String getName() {
@@ -66,5 +76,16 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", city='" + city + '\'' +
+                '}';
     }
 }
