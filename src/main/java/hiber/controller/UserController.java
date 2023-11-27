@@ -1,69 +1,63 @@
 package hiber.controller;
 
+import hiber.config.PersistenceJPAConfig;
 import hiber.model.User;
 import hiber.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+
 public class UserController {
+    private AnnotationConfigApplicationContext context;
 
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public UserController() {
+        context = new AnnotationConfigApplicationContext(PersistenceJPAConfig.class);
+        userService = context.getBean(UserService.class);
     }
 
-    @GetMapping("/")
-    public ModelAndView allUsers() {
-        List<User> users = userService.allUsers();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("listUser");
-        modelAndView.addObject("listUser", users);
-        return modelAndView;
+    @GetMapping("/users")
+    public String findAll(Model model) {
+        List<User> users = userService.getAll();
+        model.addAttribute("users", users);
+        return "user-list";
     }
 
-    @GetMapping("/add")
-    public String addPage() {
-        return "addUser";
+    @GetMapping("/user-create")
+    public String createUserForm(User user) {
+        return "user-create";
     }
 
-    @PostMapping( "/add")
-    public String addUser(@ModelAttribute("user") User user) {
-        userService.save(user);
-        return "redirect:/";
+    @PostMapping("/user-create")
+    public String createUser(User user) {
+        userService.addUser(user);
+        return "redirect:/users";
     }
 
-    @GetMapping( "/edit/{id}")
-    public ModelAndView editPage(@PathVariable("id") long id) {
-        User user = userService.getById(id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("editUser");
-        modelAndView.addObject("user", user);
-        return modelAndView;
+    @GetMapping("user-delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.removeUser(id);
+        return "redirect:/users";
     }
 
-    @PostMapping( "/edit")
-    public String editUser(@ModelAttribute("user") User user) {
-        userService.save(user);
-        return "redirect:/";
+    @GetMapping("/user-update/{id}")
+    public String updateUserForm(@PathVariable("id") Long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "user-update";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        User user = userService.getById(id);
-        userService.delete(user);
-        return "redirect:/";
+    @PostMapping("/user-update")
+    public String updateUser(User user) {
+        userService.updateUser(user);
+        return "redirect:/users";
     }
 }
