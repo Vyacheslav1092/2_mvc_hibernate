@@ -26,6 +26,7 @@ import java.util.Properties;
 public class PersistenceJPAConfig {
     @Autowired
     private Environment env;
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean =
                 new LocalContainerEntityManagerFactoryBean();

@@ -1,9 +1,7 @@
 package hiber.controller;
 
-import hiber.config.PersistenceJPAConfig;
 import hiber.model.User;
 import hiber.service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
-
 public class UserController {
-    private AnnotationConfigApplicationContext context;
 
     private final UserService userService;
 
-    public UserController() {
-        context = new AnnotationConfigApplicationContext(PersistenceJPAConfig.class);
-        userService = context.getBean(UserService.class);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/users")
@@ -42,7 +37,7 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("user-delete/{id}")
+    @PostMapping("user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.removeUser(id);
         return "redirect:/users";

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -22,10 +22,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(Long id) {
-        TypedQuery<User> query = entityManager
-                .createQuery("select u from User u where u.id = :id", User.class);
-        query.setParameter("id", id);
-        return query.getResultList().stream().findAny().orElse(null);
+        User user = entityManager.find(User.class, id);
+        if (user == null) {
+            throw new EntityNotFoundException("User with id " + id + "not found");
+        }
+        return user;
     }
 
     @Override
@@ -41,6 +42,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void removeUser(Long id) {
         User user = entityManager.find(User.class, id);
-        entityManager.remove(user);
+        if (user != null) {
+            entityManager.remove(user);
+        } else {
+            throw new EntityNotFoundException("User with id " + id + "not found");
+        }
     }
 }
