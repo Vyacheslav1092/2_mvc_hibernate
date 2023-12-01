@@ -10,7 +10,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="2_mvc_hibernate" target="1.8" />
+      <module name="2_mvc_hibernate" target="17" />
+      <module name="SpringMvcHibernate" target="1.8" />
+      <module name="TestAlishev" target="1.8" />
       <module name="UserDataBase" target="17" />
     </bytecodeTargetLevel>
   </component>

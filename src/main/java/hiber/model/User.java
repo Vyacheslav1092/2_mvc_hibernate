@@ -1,58 +1,69 @@
 package hiber.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users2")
+@Table(name = "users")
 public class User {
 
-    @Id
+    private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    long id;
 
     @Column(name = "name")
-    private String name;
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 2, max = 30, message = "Name should be between 2 to 30")
+    private String firstName;
 
     @Column(name = "lastName")
+    @NotEmpty(message = "LastName should not be empty")
+    @Size(min = 2, max = 30, message = "LastName should be between 2 and 30 characters")
     private String lastName;
 
     @Column(name = "age")
+    @Min(value = 0, message = "Age should be > 0")
     private byte age;
 
-    @Column(name = "city")
-    private String city;
+    @NotEmpty(message = "Email should not be empty")
+    @Email(message = "Email should be valid")
+    private String email;
+
 
     public User() {
 
     }
 
-    public User(String name, String lastName, byte age, String city) {
-        this.name = name;
+    public User(String firstName, String lastName, byte age, String email) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.city = city;
+        this.email = email;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -63,6 +74,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public byte getAge() {
         return age;
     }
@@ -71,22 +90,9 @@ public class User {
         this.age = age;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", city='" + city + '\'' +
-                '}';
+        return String.format("User [id = %d; firstName = %s; lastName = %s; age = %s; email = %s;]",
+                id, firstName, lastName, age, email);
     }
 }

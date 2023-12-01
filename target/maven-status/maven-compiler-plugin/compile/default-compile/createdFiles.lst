@@ -1,7 +1,9 @@
-model/Car.class
-web/controller/CarController.class
-web/controller/HelloController.class
-web/config/WebConfig.class
-service/ServiceCar.class
-web/config/AppInit.class
-service/ServiceCarImpl.class
+hiber\controller\UsersController.class
+hiber\model\User.class
+hiber\dao\UserDaoImpl.class
+hiber\service\UserServiceImpl.class
+hiber\config\ApplicationInit.class
+hiber\config\MvcConfig.class
+hiber\dao\UserDao.class
+hiber\config\AppConfig.class
+ru\itsinfo\service\UserService.class
