@@ -23,7 +23,8 @@
             </div>
             <div>
                 <label for="last_name">Last name</label>
-                <input type="text" id="last_name" th:field="*{lastName}" th:value="*{getLastName()}" placeholder="Enter last name">
+                <input type="text" id="last_name" th:field="*{last_name}" th:value="*{getLast_name()}" placeholder="Enter last name">
+                <div th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></div>
             </div>
         </div>
         <div>
@@ -40,7 +41,7 @@
         </div>
 
         <button th:text="*{getId()} ? 'Save' : 'Create'"/>
-        <a href="/users">Cancel</a>
+        <a href="/">Cancel</a>
     </form>
 </div>
 

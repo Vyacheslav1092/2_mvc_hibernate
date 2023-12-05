@@ -15,7 +15,7 @@ import ru.itsinfo.service.UserService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/")
 public class UsersController {
 
     private final UserService userService;
@@ -43,7 +43,7 @@ public class UsersController {
 
         if (null == user) {
             attributes.addFlashAttribute("flashMessage", "User are not exists!");
-            return "redirect:/users";
+            return "redirect:/";
         }
 
         System.out.println(id);
@@ -62,10 +62,10 @@ public class UsersController {
         userService.createOrUpdateUser(user);
         attributes.addFlashAttribute("flashMessage",
                 "User " + user.getFirstName() + " successfully created!");
-        return "redirect:/users";
+        return "redirect:/";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String deleteUser(@RequestParam(value = "id", required = true, defaultValue = "") long id,
                              RedirectAttributes attributes) {
         User user = userService.deleteUser(id);
@@ -74,6 +74,6 @@ public class UsersController {
                 "User are not exists!" :
                 "User " + user.getFirstName() + " successfully deleted!");
 
-        return "redirect:/users";
+        return "redirect:/";
     }
 }

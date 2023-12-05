@@ -25,15 +25,16 @@ public class User {
     @Size(min = 2, max = 30, message = "Name should be between 2 to 30")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     @NotEmpty(message = "LastName should not be empty")
     @Size(min = 2, max = 30, message = "LastName should be between 2 and 30 characters")
-    private String lastName;
+    private String last_name;
 
     @Column(name = "age")
     @Min(value = 0, message = "Age should be > 0")
     private byte age;
 
+    @Column(name = "email")
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email should be valid")
     private String email;
@@ -45,7 +46,7 @@ public class User {
 
     public User(String firstName, String lastName, byte age, String email) {
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.last_name = lastName;
         this.age = age;
         this.email = email;
     }
@@ -66,12 +67,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLast_name(String lastName) {
+        this.last_name = lastName;
     }
 
     public String getEmail() {
@@ -93,6 +94,6 @@ public class User {
     @Override
     public String toString() {
         return String.format("User [id = %d; firstName = %s; lastName = %s; age = %s; email = %s;]",
-                id, firstName, lastName, age, email);
+                id, firstName, last_name, age, email);
     }
 }

@@ -4,6 +4,7 @@ import hiber.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User deleteUser(long id) throws NullPointerException {
+    public User deleteUser(long id) throws EntityNotFoundException {
         User user = readUser(id);
         if (null == user) {
             throw new NullPointerException("User not found");

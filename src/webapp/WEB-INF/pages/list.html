@@ -31,15 +31,15 @@
     <div th:each="user : ${users}" style="display: flex; gap: 30px">
         <div th:text="${user.getFirstName()}"/>
         <br>
-        <div th:text="${user.getLastName()}"/>
+        <div th:text="${user.getLast_name()}"/>
         <br>
         <div th:text="${user.getAge()}"/>
         <br>
         <div th:text="${user.getEmail()}"/>
         <br>
         <div>
-            <a th:href="@{/users/edit(id=${user.getId()})}">Edit</a>
-            <a th:href="@{/users/delete(id=${user.getId()})}">Delete</a>
+            <a th:href="@{/edit(id=${user.getId()})}">Edit</a>
+            <a th:href="@{/delete(id=${user.getId()})}">Delete</a>
         </div>
     </div>
 </div>
