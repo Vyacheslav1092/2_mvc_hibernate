@@ -3,6 +3,7 @@ package hiber.service;
 import hiber.dao.UserDao;
 import hiber.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class UserServiceImpl implements ru.itsinfo.service.UserService {
     }
 
     @Override
+    @Transactional
     public void createOrUpdateUser(User user) {
         if (0 == user.getId()) {
             createUser(user);
@@ -43,6 +45,7 @@ public class UserServiceImpl implements ru.itsinfo.service.UserService {
     }
 
     @Override
+    @Transactional
     public User deleteUser(long id) {
         User user = null;
         try {
